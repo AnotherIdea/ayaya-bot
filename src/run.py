@@ -1,6 +1,7 @@
 import re
 import socket
 from config import CHANNEL_NAME, BOT_USERNAME, OAUTH_TOKEN, CLIENT_ID
+from config import logger
 
 HOST = "irc.chat.twitch.tv"
 PORT = 6667
@@ -15,26 +16,32 @@ def connect(con):
 
 
 def send_pong(con, msg):
+    logger.debug("Sending PONG {}".format(msg))
     con.send(bytes('PONG %s\r\n' % msg, 'UTF-8'))
 
 
 def send_message(con, chan, msg):
+    logger.debug("Sending PRIVMSG {} :{}".format(chan, msg))
     con.send(bytes('PRIVMSG %s :%s\r\n' % (chan, msg), 'UTF-8'))
 
 
 def send_nick(con, nick):
+    logger.debug("Sending NICK {}".format(nick))
     con.send(bytes('NICK %s\r\n' % nick, 'UTF-8'))
 
 
 def send_pass(con, password):
+    logger.debug("Sending PASS {}".format(password))
     con.send(bytes('PASS %s\r\n' % password, 'UTF-8'))
 
 
 def join_channel(con, chan):
+    logger.debug("Sending JOIN {}".format(chan))
     con.send(bytes('JOIN %s\r\n' % chan, 'UTF-8'))
 
 
 def part_channel(con, chan):
+    logger.debug("Sending PART {}".format(chan))
     con.send(bytes('PART %s\r\n' % chan, 'UTF-8'))
 
 
@@ -68,10 +75,10 @@ def parse_message(con, msg):
 
 
 def main():
-    print("Connecting to : {}".format(CHANNEL_NAME))
-    print("Nickname : {}".format(BOT_USERNAME))
-    print("OAUTH_TOKEN : {}".format(OAUTH_TOKEN))
-    print("CLIENT_ID : {}".format(CLIENT_ID))
+    logger.info("Connecting to : {}".format(CHANNEL_NAME))
+    logger.info("Nickname : {}".format(BOT_USERNAME))
+    logger.info("OAUTH_TOKEN : {}".format(OAUTH_TOKEN))
+    logger.info("CLIENT_ID : {}".format(CLIENT_ID))
     con = socket.socket()
     connect(con)
 
@@ -96,17 +103,17 @@ def main():
                         parse_message(con, message)
 
         except socket.error:
-            print("Socket died")
+            logger.error("Socket died")
             con = socket.socket()
             connect(con)
 
         except socket.timeout:
-            print("Socket timeout")
+            logger.warn("Socket timeout")
             con = socket.socket()
             connect(con)
 
 
 if __name__ == '__main__':
-    print("Running !")
+    logger.info("Running !")
     main()
-    print("Stopped !")
+    logger.info("Stopped !")
