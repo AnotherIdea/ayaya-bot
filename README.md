@@ -18,3 +18,7 @@ https://dev.twitch.tv/docs/irc
 
 ## Stop the bot
 `docker stop NAME_FOR_CONTAINER`
+
+
+## TODO
+- args for debug mode
