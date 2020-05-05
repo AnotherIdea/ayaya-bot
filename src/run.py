@@ -5,9 +5,7 @@ from config import CHANNEL_NAME, BOT_USERNAME, OAUTH_TOKEN, CLIENT_ID
 
 def main():
     rulesList = [RuleMessageContains("ayaya", "sardAYAYA")]
-    ayayaBot = AYAYABot(
-        BOT_USERNAME, CHANNEL_NAME, OAUTH_TOKEN, CLIENT_ID, rulesList
-    )
+    ayayaBot = AYAYABot(BOT_USERNAME, CHANNEL_NAME, OAUTH_TOKEN, CLIENT_ID, rulesList)
     ayayaBot.run()
 
 

@@ -10,9 +10,7 @@ class AYAYABot:
     HOST = "irc.chat.twitch.tv"
     PORT = 6667
 
-    def __init__(
-        self, botUsername, channelName, oauthToken, clientID, rulesList
-    ):
+    def __init__(self, botUsername, channelName, oauthToken, clientID, rulesList):
         self.botUsername = botUsername
         self.channelName = channelName
         self.oauthToken = oauthToken
@@ -65,9 +63,7 @@ class AYAYABot:
     def send_message(self, message):
         logger.debug("Sending PRIVMSG {} {}".format(self.channelName, message))
         self.con.send(
-            bytes(
-                "PRIVMSG {} {}\r\n".format(self.channelName, message), "UTF-8"
-            )
+            bytes("PRIVMSG {} {}\r\n".format(self.channelName, message), "UTF-8")
         )
 
     def parse_message(self, username, channel, message):
